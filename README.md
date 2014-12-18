@@ -5,7 +5,7 @@ ryoko-ukagai
 
 以下のものが必要です:
 - pdftk
-- teikei.cls, youshi.sty [Teikei マクロについて](ftp://masui.med.osaka-u.ac.jp/pub/public/latex/style/Teikei0.96.tar.gz)からダウンロードしてください．
+- teikei.cls, youshi.sty: Teikei マクロについて (ftp://masui.med.osaka-u.ac.jp/pub/public/latex/style/Teikei0.96.tar.gz) からダウンロードしてください．
 - ifthen.sty, calc.sty
 - 旅行伺様式の pdf (MD5SUM: 2baa916259bb90970582755f0b028f10): これは macros/ 以下に ukagai-back.pdf という名前で置いてください．
 
