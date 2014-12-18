@@ -1,0 +1,336 @@
+%%% misc.
+\def\TO{{\tiny $\sim$}}
+
+%%% 個人データ用
+\def\TRAVELLER{\typeout{旅行者が指定されていません!}}
+\def\PERSON#1#2#3#4#5{
+  \def\TRAVELLER{
+  \XYBC{3.7cm}{2.2cm}{10.5cm}{3.1cm}{#1} % 所属部署
+  \XYBC{3.7cm}{3.1cm}{10.5cm}{3.6cm}{\footnotesize #2} % 債主コード
+  \XYBC{3.7cm}{3.6cm}{10.5cm}{4.5cm}{#3} % 氏名
+  \XYBC{15.5cm}{2.6cm}{26.5cm}{3.2cm}{\scriptsize #4} % 住所
+  %% 職等の区分
+  %% 0 = その他・研究発表
+  %% 1 = その他・職務補助
+  %% 2 = 教授・准教授
+  %% 3 = 教職員
+  \ifthenelse{#5 = 0}{
+     \XYBC{12.9cm}{3.3cm}{13.3cm}{4.0cm}{■} % その他
+     \XYBC{14.3cm}{3.3cm}{14.9cm}{4.0cm}{■} % 研究発表
+  }{}
+  \ifthenelse{#5 = 1}{
+     \XYBC{12.9cm}{3.3cm}{13.3cm}{4.0cm}{■} % その他
+     \XYBC{16.3cm}{3.3cm}{16.9cm}{4.0cm}{■} % 職務補助
+  }{}
+  \ifthenelse{#5 = 2}{\XYBC{15.3cm}{3.1cm}{15.8cm}{3.6cm}{■}}{} % 教授・准教授
+  \ifthenelse{#5 = 3}{\XYBC{18.9cm}{3.1cm}{19.3cm}{3.6cm}{■}}{} % 助教
+  }
+  \XYBC{20.2cm}{-1.9cm}{26.0cm}{-1.9cm}{\small 情報学研究科}
+}
+
+%% 部署コード
+\def\部署コード#1{
+  \def\BUSHODEF{
+    \XYBC{15.0cm}{4.9cm}{21.6cm}{5.4cm}{\scriptsize #1}
+  }
+}
+\def\SHOZOKU#1#2#3#4{
+  \部署コード{#4}
+}
+
+
+%%% 旅行期間
+\def\SCHEDULE{\typeout{旅行期間が指定されていません!}}
+\def\旅行期間(#1.#2.#3-#4.#5.#6)#7日間{
+  \def\SCHEDULE{%
+  \XYBC{12.6cm}{3.9cm}{15.0cm}{4.5cm}{#1・#2・#3} %% 始
+  \XYBC{15.8cm}{3.9cm}{18.2cm}{4.5cm}{#4・#5・#6} %% 終
+  \XYBC{19.0cm}{3.9cm}{20.0cm}{4.5cm}{#7} %% 日
+  }
+}
+
+
+%%% 備考
+\long\def\備考#1{%
+  \long\def\BIKO{%
+    \XYBC{23.3cm}{9.5cm}{26.5cm}{11.5cm}{{\scriptsize #1}}
+  }
+}
+\def\KRP{%
+  \XYBC{27.1cm}{12.2cm}{27.6cm}{12.8cm}{\scriptsize ■} %% KRP
+}
+
+%%% 予算科目
+\def\KAMOKU#1{
+  \XYBC{4.9cm}{4.5cm}{10.5cm}{5.4cm}{#1}
+}
+
+\def\CODE#1{
+  \XYBC{15.0cm}{4.5cm}{21.6cm}{5.0cm}{#1}
+}
+
+\def\KENKYU{
+  \XYBC{5.8cm}{5.3cm}{6.3cm}{5.9cm}{■} %% 研究経費
+}
+\def\KYOIKU{
+  \XYBC{3.8cm}{5.3cm}{4.4cm}{5.9cm}{■} %% 教育経費
+}
+
+%% 科研費
+\def\予算科目{\relax}
+\def\KAKEN#1#2#3#4#5{
+  \def\予算科目{%
+  \KENKYU
+  \XYBC{10.8cm}{5.8cm}{11.4cm}{6.3cm}{■} %% 科研費
+  \KAMOKU{#1}
+  \CODE{#2 #3}
+%  \BUSHODEF
+  \def\THEME{#4(課題番号 #5)}
+  }
+}
+
+%% 受託研究
+\def\JUTAKU#1#2#3#4{
+  \def\予算科目{%
+  %\KENKYU
+  \XYBC{12.4cm}{5.3cm}{12.9cm}{5.9cm}{■} %% 受託研究
+  \XYBC{5.8cm}{5.8cm}{6.3cm}{6.3cm}{■} %% 受託研究
+  \KAMOKU{#1}
+  \CODE{#2 #3} %%
+%  \BUSHODEF
+  \def\THEME{#4%(課題番号 #4)
+}
+}}
+
+%% 運営費-研究経費
+\def\運営費研究補{
+  \def\予算科目{%
+  \KAMOKU{教育研究事業費}
+  \KENKYU
+  \XYBC{3.7cm}{5.8cm}{4.3cm}{6.3cm}{■} %% 大学運営費
+}}
+\def\運営費研究{
+  \運営費研究補
+%  \BUSHODEF
+}
+
+%% 寄付金
+\def\寄付金{
+  \def\予算科目{%
+  \KAMOKU{寄付金}
+  \XYBC{9.3cm}{5.8cm}{9.9cm}{6.3cm}{■} %% 寄付金
+%  \BUSHODEF
+}}
+
+%% 先方負担
+\def\先方負担#1{
+  \def\予算科目{%
+  \XYBC{3.0cm}{6.3cm}{3.7cm}{6.8cm}{■} %% 先方負担
+  \XYBC{5.6cm}{6.3cm}{8.9cm}{6.7cm}{{\tiny #1}}
+%  \BUSHODEF
+}}
+
+
+%%% 旅行日程
+%% n段目のY座標は、5.7 + 1.3 * n 〜 6.7 + 1.3 * n
+
+%% \def\DATUM#1#2#3#4#5#6#7{
+%%    \XYBC{0cm}{#1}{1.7cm}{#2}{\tiny {#3}} %% 年月日
+%%    \XYBC{1.8cm}{#1}{3.7cm}{#2}{\scriptsize {#4}} %% 出発地
+%%    \XYBC{3.6cm}{#1}{5.5cm}{#2}{\scriptsize {#5}} %% 目的地
+%%    \XYBC{5.5cm}{#1}{8.5cm}{#2}{\scriptsize {#6}} %% 用務先
+%%    \XYBC{8.4cm}{#1}{15.5cm}{#2}{\scriptsize {#7}}
+%% }
+
+\def\DDATUM#1#2#3{
+   \XYBC{1.1cm}{#1}{2.7cm}{#2}{\tiny {\csname 年月日#3\endcsname}} %% 年月日
+   \XYBC{2.7cm}{#1}{4.5cm}{#2}{\tiny {\csname 出発地#3\endcsname}} %% 出発地
+   \XYBC{4.5cm}{#1}{6.3cm}{#2}{\tiny {\csname 目的地#3\endcsname}} %% 目的地
+   \XYBC{6.3cm}{#1}{8.9cm}{#2}{\tiny {\csname 用務先#3\endcsname}} %% 用務先
+   \XYBC{8.9cm}{#1}{15.2cm}{#2}{\scriptsize {\csname 用務#3\endcsname}}
+}
+
+\def\resetentries#1{%
+ \expandafter\def\csname 年月日#1\endcsname{\relax}
+ \expandafter\def\csname 出発地#1\endcsname{\relax}
+ \expandafter\def\csname 目的地#1\endcsname{\relax}
+ \expandafter\def\csname 用務先#1\endcsname{\relax}
+ \long\expandafter\def\csname 用務#1\endcsname{\relax}
+}
+\resetentries{i}
+\resetentries{ii}
+\resetentries{iii}
+\resetentries{iiii}
+\resetentries{iiiii}
+\resetentries{iiiiii}
+\resetentries{iiiiiii}
+\resetentries{iiiiiiii}
+\resetentries{iiiiiiiii}
+\resetentries{iiiiiiiiii}
+\resetentries{iiiiiiiiiii}
+\resetentries{iiiiiiiiiiii}
+
+\newcounter{ryotei}
+\def\旅行日程{\@旅行日程{i}}
+\def\@旅程おわり#1{\relax}
+\def\@旅行日程#1#2|#3|#4|#5|#6|{%
+  \stepcounter{ryotei}
+  \expandafter\def\csname 年月日#1\endcsname{#2}%
+  \expandafter\def\csname 出発地#1\endcsname{#3}%
+  \expandafter\def\csname 目的地#1\endcsname{#4}%
+  \expandafter\def\csname 用務先#1\endcsname{#5}%
+  \long\expandafter\def\csname 用務#1\endcsname{#6}%
+  \@ifnextchar\旅行日程おわり{%
+    \@旅程おわり%
+  }{%
+    \@旅行日程{i#1}%
+  }
+}
+
+%%% 調整
+\def\CHOUSEI{\typeout{旅費調整が指定されていません!}}
+\def\定額{%
+ \def\CHOUSEI{%
+   \XYBC{4.5cm}{13.1cm}{5.2cm}{13.9cm}{■} %% 定額
+ }
+}
+
+\def\減額#1円{%
+ \def\CHOUSEI{%
+   \XYBC{6.4cm}{13.1cm}{7.1cm}{13.9cm}{■} %% 調整
+   \XYBC{7.7cm}{13.1cm}{8.3cm}{13.9cm}{■} %% 減額
+   \XYBC{8.8cm}{13.2cm}{10.0cm}{13.9cm}{{\scriptsize #1}} %% 
+ }
+}
+
+\def\支給額#1円{%
+ \def\CHOUSEI{%
+   \XYBC{6.4cm}{13.1cm}{7.1cm}{13.9cm}{■} %% 調整
+   \XYBC{10.5cm}{13.1cm}{11.1cm}{13.9cm}{■} %% 支給額
+   \XYBC{11.8cm}{13.2cm}{13.1cm}{13.9cm}{{\scriptsize#1}} %% 
+ }
+}
+
+
+%%% 報告
+%%% 報告年月日
+\def\報告年月日#1#2#3{
+  \XYBC{0.6cm}{12.8cm}{1.6cm}{12.8cm}{{\scriptsize #1}} %% 年
+  \XYBC{1.6cm}{12.8cm}{2.6cm}{12.8cm}{{\scriptsize #2}} %% 月
+  \XYBC{2.6cm}{12.8cm}{3.6cm}{12.8cm}{{\scriptsize #3}} %% 日
+
+  \XYBC{2.2cm}{15.1cm}{3.2cm}{15.1cm}{{\scriptsize #1}} %% 年
+  \XYBC{3.2cm}{15.1cm}{4.2cm}{15.1cm}{{\scriptsize #2}} %% 月
+  \XYBC{4.2cm}{15.1cm}{5.2cm}{15.1cm}{{\scriptsize #3}} %% 日
+}
+
+\def\清算か概算か#1{
+ \def\SEIGAI{
+ %% 0 = 精算
+ %% 1 = 概算
+  \ifthenelse{#1 = 0}{
+        \XYBC{11.4cm}{0.4cm}{12.1cm}{0.9cm}{{\LARGE ■}} %% 
+        \XYBC{0.9cm}{13.9cm}{1.5cm}{14.5cm}{■} %% 精算
+    %    \XYBC{17.5cm}{16.3cm}{18.2cm}{16.9cm}{■} %% 旅行内容
+    %    \XYBC{17.5cm}{16.8cm}{18.2cm}{17.5cm}{■} %% 精算額
+  }{
+        \XYBC{9.3cm}{0.4cm}{9.9cm}{0.9cm}{{\LARGE ■}} %% 
+        \XYBC{0.9cm}{14.2cm}{1.5cm}{14.8cm}{■} %% 概算
+  }
+ }
+}
+
+%% 振替・代休日
+\def\FURIKAEA{}
+\def\FURIKAEB{}
+\def\振替代休日１#1→#2|#3{%
+  \def\FURIKAEA{
+    \XYBC{12.6cm}{18.3cm}{14.6cm}{18.9cm}{{\scriptsize #1}} % 勤務日１
+    \XYBC{15.3cm}{18.3cm}{17.0cm}{18.9cm}{{\scriptsize #2}} % 振替日１
+    \ifthenelse{#3 = 0}{%
+      \XYBC{15.3cm}{17.5cm}{15.8cm}{18.4cm}{\Large ○}
+    }{%
+      \XYBC{16.0cm}{17.5cm}{16.5cm}{18.4cm}{\Large ○}
+    }
+  }
+}
+\def\振替代休日２#1→#2|#3{%
+  \def\FURIKAEB{
+    \XYBC{17.8cm}{18.3cm}{19.4cm}{18.9cm}{{\scriptsize #1}} % 勤務日２
+    \XYBC{20.0cm}{18.3cm}{21.8cm}{18.9cm}{{\scriptsize #2}} % 振替日２
+    \ifthenelse{#3 = 0}{%
+      \XYBC{19.9cm}{17.5cm}{20.4cm}{18.4cm}{\Large ○}
+    }{%
+      \XYBC{20.8cm}{17.5cm}{21.3cm}{18.4cm}{\Large ○}
+    }
+  }
+}
+
+
+%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\EMITBODY{
+  \pageno=1
+% for printing
+  \hoffset=-7.4mm
+  \voffset=-18mm
+% for XDVI
+%  \hoffset=-25mm
+\footnotesize
+%  \advance\hsize by -\hoffset
+%  \advance\vsize by -\voffset
+%  \OFFSET
+\parindent=0pt
+
+\TRAVELLER % 個人データ
+\SCHEDULE  % 旅行期間
+\BUSHODEF
+\予算科目
+
+%% 旅行日程
+%% n段目のY座標は、6.3 + 1.1 * n 〜 7.2 + 1.1 * n
+%% 改訂(2013.7.9)：n+1段目のY座標は、7.2 + 0.9 * n 〜 8.1 + 0.9 * n
+%% \DATUM{6.6cm}{7.6cm}{日付}{出発}{到着}{用務地}{用務内容}
+
+\ifnum\value{ryotei}<7
+% \DATUM{7.4cm}{8.3cm}{\年月日i}{\出発地i}{\目的地i}{\用務先i}{\用務i}
+% \DATUM{8.5cm}{9.4cm}{\年月日ii}{\出発地ii}{\目的地ii}{\用務先ii}{\用務ii}
+% \DATUM{9.6cm}{10.5cm}{\年月日iii}{\出発地iii}{\目的地iii}{\用務先iii}{\用務iii}
+% \DATUM{10.7cm}{11.6cm}{\年月日iiii}{\出発地iiii}{\目的地iiii}{\用務先iiii}{\用務iiii}
+% \DATUM{11.8cm}{12.7cm}{\年月日iiiii}{\出発地iiiii}{\目的地iiiii}{\用務先iiiii}{\用務iiiii}
+% \DATUM{12.9cm}{13.8cm}{\年月日iiiiii}{\出発地iiiiii}{\目的地iiiiii}
+%                       {\用務先iiiiii}{\用務iiiiii}
+\DDATUM{7.25cm}{8.15cm}{i}
+\DDATUM{8.15cm}{9.05cm}{ii}
+\DDATUM{9.05cm}{9.95cm}{iii}
+\DDATUM{9.95cm}{10.85cm}{iiii}
+\DDATUM{10.85cm}{11.75cm}{iiiii}
+\DDATUM{11.75cm}{12.65cm}{iiiiii}
+\else
+\DDATUM{7.25cm}{7.7cm}{i}
+\DDATUM{7.7cm}{8.15cm}{ii}
+\DDATUM{8.15cm}{8.6cm}{iii}
+\DDATUM{8.6cm}{9.05cm}{iiii}
+\DDATUM{9.05cm}{9.5cm}{iiiii}
+\DDATUM{9.5cm}{9.95cm}{iiiiii}
+\DDATUM{9.95cm}{10.4cm}{iiiiiii}
+\DDATUM{10.4cm}{10.85cm}{iiiiiiii}
+\DDATUM{10.85cm}{11.3cm}{iiiiiiiii}
+\DDATUM{11.3cm}{11.75cm}{iiiiiiiiii}
+\DDATUM{11.75cm}{12.2cm}{iiiiiiiiiii}
+\DDATUM{12.2cm}{12.65cm}{iiiiiiiiiiii}
+\fi
+%% 備考
+\BIKO
+
+%% 調整
+\CHOUSEI
+
+%% 報告
+%% 0 = 精算，1 = 概算
+\SEIGAI
+
+%% 振替代休日
+\FURIKAEA
+\FURIKAEB
+}
