@@ -12,5 +12,6 @@ ryoko-ukagai
 使い方
 ======
 
+0. macros/personal-defs-example.sty を参考に macros/personal-defs.sty を作る(最初はコピーでＯＫ)
 1. sample.tex を参考に hoge.tex を作る
 2. ./ukagai.sh hoge を実行
